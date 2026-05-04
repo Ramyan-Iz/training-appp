@@ -4,49 +4,84 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="theme-color" content="#1a1a2e">
-    <title>Тренировки Эктоморфа 206 см</title>
+    <meta name="description" content="Тренировки и питание для эктоморфа 206 см">
+    <title>Эктоморф 206 см | Тренировки + Питание</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0f0f1a; color: #f0f0f0; padding-bottom: 70px; }
-        .tab-bar { position: fixed; bottom: 0; left: 0; right: 0; background: #0a0a0f; display: flex; border-top: 1px solid #2c2c3e; z-index: 1000; }
-        .tab { flex: 1; text-align: center; padding: 10px 0 12px; font-size: 22px; cursor: pointer; color: #888; }
+        
+        /* Таб-бар */
+        .tab-bar { position: fixed; bottom: 0; left: 0; right: 0; background: #0a0a0f; display: flex; border-top: 1px solid #2c2c3e; z-index: 1000; backdrop-filter: blur(10px); }
+        .tab { flex: 1; text-align: center; padding: 10px 0 12px; font-size: 22px; cursor: pointer; color: #888; transition: 0.2s; }
         .tab.active { color: #f8c471; background: #1a1a2a; }
         .tab span { display: block; font-size: 10px; margin-top: 3px; }
+        
+        /* Контент */
         .tab-content { display: none; padding: 20px 16px 30px; max-width: 600px; margin: 0 auto; }
         .tab-content.active { display: block; }
+        
+        /* Заголовки */
         h1 { font-size: 26px; margin-bottom: 8px; background: linear-gradient(135deg, #f8c471, #e67e22); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         h2 { font-size: 20px; margin: 20px 0 12px; color: #f8c471; border-left: 4px solid #f8c471; padding-left: 12px; }
-        .exercise-card, .food-card, .supp-card, .stats-card { background: #1e1e2e; border-radius: 20px; padding: 14px; margin: 12px 0; border: 1px solid #2c2c3e; }
+        h3 { font-size: 16px; margin: 12px 0 8px; color: #ddd; }
+        
+        /* Карточки */
+        .card { background: #1e1e2e; border-radius: 20px; padding: 14px; margin: 12px 0; border: 1px solid #2c2c3e; }
         .exercise-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
         .exercise-name { font-weight: 600; font-size: 16px; flex: 1; }
         .exercise-sets { font-size: 13px; color: #f8c471; background: #2a2a3a; padding: 4px 10px; border-radius: 20px; }
+        
+        /* Элементы управления */
         .checkbox-custom { transform: scale(1.3); margin-left: 8px; accent-color: #f8c471; }
         .input-group { display: flex; gap: 12px; margin-top: 12px; }
-        .input-group input { flex: 1; background: #2a2a3a; border: none; padding: 10px 12px; border-radius: 14px; color: white; }
-        button { background: #f8c471; color: #1a1a2e; border: none; padding: 12px 20px; border-radius: 30px; font-weight: bold; font-size: 15px; cursor: pointer; width: 100%; margin-top: 8px; }
+        .input-group input { flex: 1; background: #2a2a3a; border: none; padding: 10px 12px; border-radius: 14px; color: white; font-size: 14px; }
+        
+        /* Кнопки */
+        button { background: #f8c471; color: #1a1a2e; border: none; padding: 12px 20px; border-radius: 30px; font-weight: bold; font-size: 15px; cursor: pointer; width: 100%; margin-top: 8px; transition: transform 0.1s; }
         button:active { transform: scale(0.97); }
         button.danger { background: #e74c3c; color: white; }
         button.secondary { background: #2a2a3a; color: #f8c471; border: 1px solid #f8c471; }
-        .day-nav { display: flex; gap: 10px; overflow-x: auto; padding: 8px 0 16px; }
-        .day-btn { background: #2a2a3a; padding: 10px 18px; border-radius: 40px; font-size: 14px; white-space: nowrap; cursor: pointer; }
+        button.success { background: #2ecc71; color: white; }
+        
+        /* Навигация по дням */
+        .day-nav { display: flex; gap: 10px; overflow-x: auto; padding: 8px 0 16px; scrollbar-width: thin; }
+        .day-btn { background: #2a2a3a; padding: 10px 18px; border-radius: 40px; font-size: 14px; white-space: nowrap; cursor: pointer; transition: 0.2s; }
         .day-btn.active { background: #f8c471; color: #1a1a2e; }
-        .calorie-goal { background: linear-gradient(135deg, #2c3e50, #1a1a2e); border-radius: 20px; padding: 16px; text-align: center; margin: 16px 0; }
-        .calorie-number { font-size: 36px; font-weight: bold; color: #f8c471; }
-        .progress-bar { background: #2a2a3a; border-radius: 20px; height: 12px; margin: 12px 0; overflow: hidden; }
+        
+        /* Калории и белок */
+        .stats-grid { display: flex; gap: 12px; margin: 16px 0; }
+        .stat-card { flex: 1; background: linear-gradient(135deg, #2c3e50, #1a1a2e); border-radius: 20px; padding: 16px; text-align: center; }
+        .stat-number { font-size: 32px; font-weight: bold; color: #f8c471; }
+        .stat-label { font-size: 12px; color: #aaa; margin-top: 4px; }
+        .progress-bar { background: #2a2a3a; border-radius: 20px; height: 8px; margin: 8px 0; overflow: hidden; }
         .progress-fill { background: #f8c471; height: 100%; width: 0%; transition: width 0.3s; }
+        
+        /* Еда */
         .food-select, .food-amount { width: 100%; padding: 12px; margin: 8px 0; background: #2a2a3a; border: none; border-radius: 14px; color: white; }
         .food-item { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #2c2c3e; font-size: 13px; }
-        .remove-food { color: #e74c3c; cursor: pointer; padding: 0 8px; }
-        .supp-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; }
+        .remove-food { color: #e74c3c; cursor: pointer; padding: 0 8px; font-size: 18px; }
+        
+        /* Добавки */
+        .supp-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #2c2c3e; }
+        
+        /* Навигация по датам */
         .date-nav { display: flex; justify-content: space-between; align-items: center; margin: 16px 0; gap: 10px; }
         .date-btn { background: #2a2a3a; padding: 8px 16px; border-radius: 30px; font-size: 14px; cursor: pointer; width: auto; margin: 0; }
-        .current-date { font-size: 14px; font-weight: bold; color: #f8c471; text-align: center; flex: 1; }
-        .storage-status { background: #1e3a2e; border-radius: 12px; padding: 8px; margin-bottom: 16px; font-size: 12px; text-align: center; color: #2ecc71; }
+        .current-date { font-size: 13px; font-weight: bold; color: #f8c471; text-align: center; flex: 1; }
+        
+        /* Статусы */
+        .notification-banner { background: #1e3a2e; border-radius: 12px; padding: 10px; margin-bottom: 16px; text-align: center; cursor: pointer; }
+        .notification-banner.on { background: #1e3a2e; color: #2ecc71; }
+        .notification-banner.off { background: #3a1e1e; color: #e74c3c; }
+        .storage-status { background: #1e3a2e; border-radius: 12px; padding: 8px; margin-bottom: 16px; font-size: 12px; text-align: center; }
+        
         footer { text-align: center; font-size: 11px; color: #555; margin-top: 30px; }
+        hr { border-color: #2c2c3e; margin: 16px 0; }
     </style>
 </head>
 <body>
 
+<!-- Нижняя панель -->
 <div class="tab-bar">
     <div class="tab active" data-tab="training">🏋️<span>Тренировки</span></div>
     <div class="tab" data-tab="nutrition">🍗<span>Питание</span></div>
@@ -55,37 +90,67 @@
     <div class="tab" data-tab="history">📅<span>История</span></div>
 </div>
 
-<div id="storage-status" class="storage-status" style="margin: 12px 16px 0;">✅ Данные сохраняются в телефоне</div>
+<!-- Баннер уведомлений -->
+<div id="notification-banner" class="notification-banner off" onclick="requestNotificationPermission()">
+    🔔 Нажми, чтобы включить уведомления в 20:00
+</div>
 
-<!-- ТРЕНИРОВКИ -->
+<div id="storage-status" class="storage-status">✅ Данные сохраняются в телефоне</div>
+
+<!-- ===== ТРЕНИРОВКИ ===== -->
 <div id="training-content" class="tab-content active">
-    <h1>🏋️ Твои тренировки</h1>
+    <h1>🏋️ Тренировки 206 см</h1>
+    <p style="color:#aaa; margin-bottom:16px;">Эктоморф | 3-4 подхода × 6-10 повторений</p>
     <div class="day-nav" id="day-buttons"></div>
     <div id="exercises-container"></div>
     <button id="reset-progress" class="danger">🔄 Сбросить прогресс</button>
+    <footer>✅ Отмечай выполненные подходы и записывай веса</footer>
 </div>
 
-<!-- ПИТАНИЕ -->
+<!-- ===== ПИТАНИЕ ===== -->
 <div id="nutrition-content" class="tab-content">
-    <h1>🍗 Калькулятор еды</h1>
+    <h1>🍗 Дневник питания</h1>
+    
     <div class="date-nav">
-        <button id="prev-day" class="date-btn">◀</button>
+        <button id="prev-day" class="date-btn">◀ Вчера</button>
         <span class="current-date" id="current-date-label"></span>
-        <button id="next-day" class="date-btn">▶</button>
+        <button id="next-day" class="date-btn">Завтра ▶</button>
     </div>
-    <div class="calorie-goal">
-        <div class="calorie-number" id="calorie-display">0 / 3800</div>
-        <div id="remaining-calories"></div>
-        <div class="progress-bar"><div class="progress-fill" id="calorie-progress"></div></div>
+    
+    <!-- Калории и белок -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-number" id="calorie-display">0 / 3800</div>
+            <div class="stat-label">ККАЛ</div>
+            <div class="progress-bar"><div class="progress-fill" id="calorie-progress"></div></div>
+            <div id="remaining-calories" style="font-size:11px; margin-top:5px;"></div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number" id="protein-display">0 / 220</div>
+            <div class="stat-label">БЕЛОК (г)</div>
+            <div class="progress-bar"><div class="progress-fill" id="protein-progress" style="background:#2ecc71;"></div></div>
+            <div id="remaining-protein" style="font-size:11px; margin-top:5px;"></div>
+        </div>
     </div>
-    <select id="food-select" class="food-select"><option value="">-- Выбери продукт --</option></select>
-    <input type="number" id="food-amount" class="food-amount" placeholder="Граммы" value="100">
-    <button id="add-food">➕ Добавить</button>
-    <div id="food-list" class="food-card" style="margin-top: 16px;"></div>
-    <div id="recommendation" class="food-card"></div>
+    
+    <!-- Добавление еды -->
+    <h2>➕ Добавить съеденное</h2>
+    <div class="card">
+        <select id="food-select" class="food-select"></select>
+        <input type="number" id="food-amount" class="food-amount" placeholder="Вес в граммах" value="100">
+        <button id="add-food" class="success">➕ Добавить</button>
+    </div>
+    
+    <!-- Список съеденного -->
+    <h2>📝 Сегодня</h2>
+    <div id="food-list" class="card"></div>
+    
+    <!-- Рекомендации -->
+    <h2>💡 Что добавить?</h2>
+    <div id="recommendation" class="card"></div>
 </div>
 
-<!-- ДОБАВКИ -->
+<!-- ===== ДОБАВКИ ===== -->
 <div id="supplements-content" class="tab-content">
     <h1>💊 Добавки</h1>
     <div class="date-nav">
@@ -93,59 +158,211 @@
         <span class="current-date" id="supp-date-label"></span>
         <button id="supp-next-day" class="date-btn">▶</button>
     </div>
-    <div class="supp-card">
-        <div class="supp-row"><strong>⚡ Креатин (утром)</strong><input type="checkbox" id="creatine-check" class="checkbox-custom" style="transform:scale(1.3);"></div>
-        <div class="supp-row"><strong>☀️ Витамин Д (ужин)</strong><input type="checkbox" id="vitaminD-check" class="checkbox-custom" style="transform:scale(1.3);"></div>
+    <div class="card">
+        <div class="supp-row">
+            <div><strong>⚡ Креатин</strong><br><span style="font-size:11px; color:#aaa;">Утром 5г</span></div>
+            <input type="checkbox" id="creatine-check" class="checkbox-custom" style="transform:scale(1.3);">
+        </div>
+        <div class="supp-row">
+            <div><strong>☀️ Витамин Д3</strong><br><span style="font-size:11px; color:#aaa;">На ужин</span></div>
+            <input type="checkbox" id="vitaminD-check" class="checkbox-custom" style="transform:scale(1.3);">
+        </div>
     </div>
-    <button id="save-supplements">💾 Сохранить</button>
+    <button id="save-supplements" class="success">💾 Сохранить</button>
 </div>
 
-<!-- СТАТИСТИКА -->
+<!-- ===== СТАТИСТИКА ===== -->
 <div id="stats-content" class="tab-content">
-    <h1>📊 Статистика</h1>
-    <div id="stats-summary" class="stats-card"></div>
+    <h1>📊 Прогресс</h1>
+    <div id="stats-summary" class="card"></div>
     <button id="refresh-stats" class="secondary">🔄 Обновить</button>
-    <div id="bests-container" class="stats-card" style="margin-top: 16px;"></div>
+    <h2>🏆 Рекорды</h2>
+    <div id="bests-container" class="card"></div>
 </div>
 
-<!-- ИСТОРИЯ -->
+<!-- ===== ИСТОРИЯ ===== -->
 <div id="history-content" class="tab-content">
-    <h1>📅 История питания</h1>
-    <div id="history-list" class="food-card"></div>
+    <h1>📅 История</h1>
+    <div id="history-list" class="card"></div>
 </div>
 
 <script>
+    // ================================================
+    // БАЗА ПРОДУКТОВ С КБЖУ (на 100г)
+    // ================================================
     const foodDB = {
-        "Курица варёная": { kcal: 165 }, "Свинина": { kcal: 242 }, "Котлеты": { kcal: 260 },
-        "Фарш с рисом": { kcal: 280 }, "Макароны": { kcal: 131 }, "Рис": { kcal: 130 },
-        "Картошка": { kcal: 82 }, "Яичница с сосисками": { kcal: 450 }, "Овсянка": { kcal: 105 },
-        "Арахисовая паста": { kcal: 588 }, "Протеиновый коктейль": { kcal: 520 }, "Банан": { kcal: 89 },
-        "Булочка": { kcal: 340 }, "Хлеб": { kcal: 80 }
+        "Курица варёная": { kcal: 165, protein: 31, carbs: 0, fat: 3.6 },
+        "Свинина нежирная": { kcal: 242, protein: 19, carbs: 0, fat: 18 },
+        "Котлеты жареные": { kcal: 260, protein: 18, carbs: 15, fat: 15 },
+        "Тефтели": { kcal: 210, protein: 15, carbs: 12, fat: 11 },
+        "Купаты": { kcal: 300, protein: 14, carbs: 8, fat: 24 },
+        "Фарш с рисом": { kcal: 280, protein: 16, carbs: 22, fat: 14 },
+        "Макароны варёные": { kcal: 131, protein: 4.5, carbs: 27, fat: 0.5 },
+        "Рис варёный": { kcal: 130, protein: 2.7, carbs: 28, fat: 0.3 },
+        "Картошка варёная": { kcal: 82, protein: 2, carbs: 19, fat: 0.1 },
+        "Яичница с сосисками": { kcal: 450, protein: 20, carbs: 10, fat: 35 },
+        "Овсянка на молоке": { kcal: 105, protein: 3.5, carbs: 15, fat: 3.5 },
+        "Арахисовая паста": { kcal: 588, protein: 25, carbs: 20, fat: 50 },
+        "Протеиновый коктейль": { kcal: 520, protein: 32, carbs: 55, fat: 20 },
+        "Банан": { kcal: 89, protein: 1.1, carbs: 23, fat: 0.3 },
+        "Булочка сдобная": { kcal: 340, protein: 7, carbs: 55, fat: 10 },
+        "Хлеб (ломтик)": { kcal: 80, protein: 2.5, carbs: 15, fat: 1 },
+        "Полпорции одногруппника": { kcal: 200, protein: 10, carbs: 20, fat: 8 },
+        "Творог 5%": { kcal: 121, protein: 17, carbs: 1.5, fat: 5 },
+        "Молоко 3.2% (200мл)": { kcal: 120, protein: 6, carbs: 9, fat: 6.5 }
     };
     
+    // ================================================
+    // ПРОГРАММА ТРЕНИРОВОК (с новым упражнением)
+    // ================================================
     const program = {
-        "Грудь + Трицепс": ["Жим гантелей лёжа 4×8", "Жим на наклонной 4×8", "Трицепс на блоке 3×10", "Трицепс с канатами 3×10", "Предплечье 4 круга"],
-        "Спина + Бицепс": ["Гиперэкстензия 3×12", "Тяга блока 4×8", "Тяга сверху 4×8", "Бицепс на наклонной 3×8", "Вис на турнике 3 подхода"],
-        "Плечи + Ноги": ["Жим Арнольда 4×8", "Подъём штанги 4×8", "Разгибание ног 4×10", "Приседания 4×6", "Жим ногами 3×8", "Предплечье 4 круга"]
+        "Грудь + Трицепс": [
+            { name: "Жим гантелей лёжа", sets: "4×8-10" },
+            { name: "Жим гантелей на наклонной (30°)", sets: "4×8-10" },
+            { name: "Жим в тренажёре Hammer", sets: "3×8-10" },
+            { name: "Трицепс: выпрямление на блоке", sets: "3×10" },
+            { name: "Трицепс: канаты стоя спиной", sets: "3×10-12" },
+            { name: "Предплечье (суперсет)", sets: "4 круга" }
+        ],
+        "Спина + Бицепс": [
+            { name: "Гиперэкстензия", sets: "3×12-15" },
+            { name: "Тяга блока сидя к животу", sets: "4×8-10" },
+            { name: "Тяга сверху к шее", sets: "4×8-10" },
+            { name: "Тяга согнутым верхнего блока с согнутыми руками к поясу", sets: "4×8-10" },
+            { name: "Бицепс на наклонной скамье", sets: "3×8-10" },
+            { name: "Подъём штанги на блоке", sets: "3×8-10" },
+            { name: "Вис на турнике", sets: "3 подхода" }
+        ],
+        "Плечи + Ноги": [
+            { name: "Жим Арнольда", sets: "4×8-10" },
+            { name: "Подъём штанги к груди", sets: "4×8-10" },
+            { name: "Подъём гантелей в стороны", sets: "3×10-12" },
+            { name: "Разгибание ног в тренажёре", sets: "4×10-12" },
+            { name: "Приседания со штангой", sets: "4×6-8" },
+            { name: "Жим ногами", sets: "3×8-10" },
+            { name: "Предплечье (суперсет)", sets: "4 круга" }
+        ]
     };
     
-    const CALORIE_GOAL = 3800;
-    let foodLogs = JSON.parse(localStorage.getItem("foodLogs") || "{}");
-    let suppLogs = JSON.parse(localStorage.getItem("suppLogs") || "{}");
-    let trainingProgress = JSON.parse(localStorage.getItem("trainingProgress") || "{}");
+    // ================================================
+    // ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ
+    // ================================================
+    const CAL_GOAL = 3800;
+    const PROTEIN_GOAL = 220;
+    
+    let foodLogs = JSON.parse(localStorage.getItem("foodLogs_v6") || "{}");
+    let suppLogs = JSON.parse(localStorage.getItem("suppLogs_v6") || "{}");
+    let trainingProgress = JSON.parse(localStorage.getItem("trainingProgress_v6") || "{}");
     let currentFoodDate = new Date().toDateString();
     let currentSuppDate = new Date().toDateString();
     let currentDay = "Грудь + Трицепс";
+    let notificationPermission = false;
+    let notificationInterval = null;
     
+    // ================================================
+    // ФУНКЦИИ СОХРАНЕНИЯ
+    // ================================================
     function saveAll() {
-        localStorage.setItem("foodLogs", JSON.stringify(foodLogs));
-        localStorage.setItem("suppLogs", JSON.stringify(suppLogs));
-        localStorage.setItem("trainingProgress", JSON.stringify(trainingProgress));
+        localStorage.setItem("foodLogs_v6", JSON.stringify(foodLogs));
+        localStorage.setItem("suppLogs_v6", JSON.stringify(suppLogs));
+        localStorage.setItem("trainingProgress_v6", JSON.stringify(trainingProgress));
         document.getElementById("storage-status").innerHTML = "✅ Сохранено " + new Date().toLocaleTimeString();
-        setTimeout(() => { if(document.getElementById("storage-status")) 
-            document.getElementById("storage-status").innerHTML = "✅ Данные сохраняются в телефоне"; }, 1500);
+        setTimeout(() => {
+            if(document.getElementById("storage-status"))
+                document.getElementById("storage-status").innerHTML = "✅ Данные сохраняются в телефоне";
+        }, 2000);
     }
     
+    // ================================================
+    // УВЕДОМЛЕНИЯ
+    // ================================================
+    function requestNotificationPermission() {
+        if ("Notification" in window) {
+            Notification.requestPermission().then(permission => {
+                if (permission === "granted") {
+                    notificationPermission = true;
+                    document.getElementById("notification-banner").innerHTML = "🔔 Уведомления ВКЛЮЧЕНЫ! В 20:00 придёт отчёт";
+                    document.getElementById("notification-banner").className = "notification-banner on";
+                    scheduleEveningNotification();
+                } else {
+                    alert("Уведомления не включены. Ты можешь включить их в настройках браузера.");
+                }
+            });
+        } else {
+            alert("Ваш браузер не поддерживает уведомления");
+        }
+    }
+    
+    function scheduleEveningNotification() {
+        if (notificationInterval) clearInterval(notificationInterval);
+        
+        function checkAndNotify() {
+            const now = new Date();
+            const hour = now.getHours();
+            const minute = now.getMinutes();
+            
+            // Проверяем, что сейчас 20:00-20:05
+            if (hour === 20 && minute < 5) {
+                sendEveningReport();
+            }
+        }
+        
+        // Проверяем каждую минуту
+        notificationInterval = setInterval(checkAndNotify, 60000);
+        checkAndNotify(); // сразу проверить
+    }
+    
+    function sendEveningReport() {
+        const today = new Date().toDateString();
+        const foods = foodLogs[today] || [];
+        const totalKcal = foods.reduce((s, i) => s + i.kcal, 0);
+        const totalProtein = foods.reduce((s, i) => s + (i.protein || 0), 0);
+        const remainingKcal = CAL_GOAL - totalKcal;
+        const remainingProtein = PROTEIN_GOAL - totalProtein;
+        
+        const todaySupp = suppLogs[today] || {};
+        const missingSupps = [];
+        if (!todaySupp.creatine) missingSupps.push("Креатин");
+        if (!todaySupp.vitaminD) missingSupps.push("Витамин Д");
+        
+        let message = `🔔 ОТЧЁТ ЗА ДЕНЬ (20:00)
+`;
+        message += `🍗 Калории: ${totalKcal}/${CAL_GOAL} ккал`;
+        if (remainingKcal > 0) message += ` (осталось ${remainingKcal})`;
+        else message += ` ✅`;
+        
+        message += `
+🥩 Белок: ${totalProtein}/${PROTEIN_GOAL} г`;
+        if (remainingProtein > 0) message += ` (осталось ${remainingProtein})`;
+        else message += ` ✅`;
+        
+        if (missingSupps.length > 0) {
+            message += `
+💊 Не забыл выпить: ${missingSupps.join(", ")}!`;
+        } else {
+            message += `
+✅ Все добавки приняты!`;
+        }
+        
+        if (remainingKcal > 300) {
+            message += `
+🍌 Совет: съешь банан, протеиновый коктейль или орехи.`;
+        }
+        
+        new Notification("🏋️ Твои тренировки", { body: message, icon: "https://emojicdn.elk.sh/🏋️" });
+        
+        // Также показываем баннер в приложении
+        const banner = document.getElementById("notification-banner");
+        const oldText = banner.innerHTML;
+        banner.innerHTML = "🔔 Уведомление отправлено!";
+        setTimeout(() => {
+            if(banner) banner.innerHTML = oldText;
+        }, 3000);
+    }
+    
+    // ================================================
+    // ТРЕНИРОВКИ
+    // ================================================
     function renderDayButtons() {
         const container = document.getElementById("day-buttons");
         container.innerHTML = "";
@@ -164,11 +381,12 @@
         program[currentDay].forEach((ex, idx) => {
             const key = `${currentDay}_${idx}`;
             const saved = trainingProgress[key] || {};
-            const div = document.createElement("div");
-            div.className = "exercise-card";
-            div.innerHTML = `
+            const card = document.createElement("div");
+            card.className = "card";
+            card.innerHTML = `
                 <div class="exercise-header">
-                    <div class="exercise-name">${ex}</div>
+                    <div class="exercise-name">${ex.name}</div>
+                    <div class="exercise-sets">${ex.sets}</div>
                     <input type="checkbox" class="checkbox-custom" data-key="${key}" ${saved.completed ? "checked" : ""}>
                 </div>
                 <div class="input-group">
@@ -176,7 +394,7 @@
                     <input type="number" placeholder="Повторы" data-reps-key="${key}" value="${saved.reps || ""}">
                 </div>
             `;
-            container.appendChild(div);
+            container.appendChild(card);
         });
         
         document.querySelectorAll(".checkbox-custom").forEach(cb => {
@@ -187,8 +405,7 @@
                 saveAll();
             };
         });
-        
-        document.querySelectorAll("input[data-weight-key]").forEach(inp => {
+        document.querySelectorAll("[data-weight-key]").forEach(inp => {
             inp.oninput = () => {
                 const key = inp.dataset.weightKey;
                 if (!trainingProgress[key]) trainingProgress[key] = {};
@@ -196,8 +413,7 @@
                 saveAll();
             };
         });
-        
-        document.querySelectorAll("input[data-reps-key]").forEach(inp => {
+        document.querySelectorAll("[data-reps-key]").forEach(inp => {
             inp.oninput = () => {
                 const key = inp.dataset.repsKey;
                 if (!trainingProgress[key]) trainingProgress[key] = {};
@@ -207,23 +423,38 @@
         });
     }
     
+    // ================================================
+    // ПИТАНИЕ (с белком)
+    // ================================================
     function updateFoodUI() {
         const foods = foodLogs[currentFoodDate] || [];
-        const total = foods.reduce((s, i) => s + i.kcal, 0);
-        const remaining = Math.max(0, CALORIE_GOAL - total);
+        const totalKcal = foods.reduce((s, i) => s + i.kcal, 0);
+        const totalProtein = foods.reduce((s, i) => s + (i.protein || 0), 0);
+        const remainingKcal = Math.max(0, CAL_GOAL - totalKcal);
+        const remainingProtein = Math.max(0, PROTEIN_GOAL - totalProtein);
+        const kcalPercent = Math.min(100, (totalKcal / CAL_GOAL) * 100);
+        const proteinPercent = Math.min(100, (totalProtein / PROTEIN_GOAL) * 100);
+        
         document.getElementById("current-date-label").innerHTML = currentFoodDate;
-        document.getElementById("calorie-display").innerHTML = total + " / " + CALORIE_GOAL;
-        document.getElementById("remaining-calories").innerHTML = `Осталось: ${remaining} ккал`;
-        document.getElementById("calorie-progress").style.width = Math.min(100, (total/CALORIE_GOAL)*100) + "%";
+        document.getElementById("calorie-display").innerHTML = Math.round(totalKcal) + " / " + CAL_GOAL;
+        document.getElementById("protein-display").innerHTML = Math.round(totalProtein) + " / " + PROTEIN_GOAL;
+        document.getElementById("remaining-calories").innerHTML = `Осталось: ${Math.round(remainingKcal)} ккал`;
+        document.getElementById("remaining-protein").innerHTML = `Осталось: ${Math.round(remainingProtein)} г белка`;
+        document.getElementById("calorie-progress").style.width = kcalPercent + "%";
+        document.getElementById("protein-progress").style.width = proteinPercent + "%";
         
         const container = document.getElementById("food-list");
-        if (foods.length === 0) container.innerHTML = "<p>Ничего не добавлено</p>";
-        else {
-            let html = "";
+        if (foods.length === 0) {
+            container.innerHTML = '<p style="color:#888;">✨ Ничего не добавлено</p>';
+        } else {
+            let html = '';
             foods.forEach((item, idx) => {
-                html += `<div class="food-item"><span>${item.name} (${item.grams}г) — ${item.kcal} ккал</span><span class="remove-food" data-idx="${idx}">❌</span></div>`;
+                html += `<div class="food-item">
+                    <span><strong>${item.name}</strong> (${item.grams}г)<br><span style="font-size:11px; color:#aaa;">${item.kcal} ккал, ${item.protein || 0}г белка</span></span>
+                    <span class="remove-food" data-idx="${idx}">❌</span>
+                </div>`;
             });
-            html += `<hr><div class="food-item"><strong>Итого: ${total} ккал</strong></div>`;
+            html += `<hr><div class="food-item"><strong>Итого:</strong> ${Math.round(totalKcal)} ккал | ${Math.round(totalProtein)}г белка</div>`;
             container.innerHTML = html;
             document.querySelectorAll(".remove-food").forEach(el => {
                 el.onclick = () => {
@@ -235,26 +466,55 @@
             });
         }
         
+        // Рекомендации
         const recDiv = document.getElementById("recommendation");
-        if (remaining <= 0) recDiv.innerHTML = "<p style='color:#2ecc71;'>✅ Норма выполнена!</p>";
-        else if (remaining < 200) recDiv.innerHTML = "<p>🍌 Банан (89 ккал)</p>";
-        else if (remaining < 400) recDiv.innerHTML = "<p>🍚 Рис 200г (260 ккал)</p>";
-        else if (remaining < 600) recDiv.innerHTML = "<p>🍗 Курица 200г + рис (460 ккал)</p>";
-        else recDiv.innerHTML = `<p>⚠️ Нужно ещё ${remaining} ккал. Фарш с рисом 300г — 840 ккал</p>`;
+        if (remainingKcal <= 0 && remainingProtein <= 0) {
+            recDiv.innerHTML = '<p style="color:#2ecc71;">✅ Отлично! Норма калорий и белка выполнена!</p>';
+        } else {
+            let recHtml = '';
+            if (remainingKcal > 0) {
+                recHtml += `<p>🔥 <strong>Нужно ещё ${Math.round(remainingKcal)} ккал:</strong></p>`;
+                if (remainingKcal < 100) recHtml += `<p>• Банан (89 ккал)</p>`;
+                else if (remainingKcal < 300) recHtml += `<p>• Банан + орехи (200 ккал)</p>`;
+                else if (remainingKcal < 500) recHtml += `<p>• Протеиновый коктейль (520 ккал)</p>`;
+                else recHtml += `<p>• Курица 200г + рис 200г (∼600 ккал)</p>`;
+            }
+            if (remainingProtein > 0) {
+                recHtml += `<p>💪 <strong>Нужно ещё ${Math.round(remainingProtein)} г белка:</strong></p>`;
+                if (remainingProtein < 20) recHtml += `<p>• Творог 150г (25г белка)</p>`;
+                else if (remainingProtein < 40) recHtml += `<p>• Курица 200г (62г белка)</p>`;
+                else recHtml += `<p>• Протеиновый коктейль + творог</p>`;
+            }
+            recDiv.innerHTML = recHtml;
+        }
     }
     
     function addFood() {
         const name = document.getElementById("food-select").value;
         const grams = parseFloat(document.getElementById("food-amount").value);
-        if (!name || !grams) { alert("Выбери продукт"); return; }
-        const kcal = Math.round((foodDB[name].kcal * grams) / 100);
+        if (!name || !grams || grams <= 0) {
+            alert("Выбери продукт и укажи вес");
+            return;
+        }
+        const product = foodDB[name];
+        const kcal = Math.round((product.kcal * grams) / 100);
+        const protein = Math.round((product.protein * grams) / 100);
+        
         if (!foodLogs[currentFoodDate]) foodLogs[currentFoodDate] = [];
-        foodLogs[currentFoodDate].push({ name, grams, kcal });
+        foodLogs[currentFoodDate].push({ name, grams, kcal, protein });
         saveAll();
         updateFoodUI();
         document.getElementById("food-amount").value = "100";
+        
+        const btn = document.getElementById("add-food");
+        const origText = btn.innerText;
+        btn.innerText = "✅ Добавлено!";
+        setTimeout(() => { btn.innerText = origText; }, 1000);
     }
     
+    // ================================================
+    // ДОБАВКИ
+    // ================================================
     function updateSuppUI() {
         document.getElementById("supp-date-label").innerHTML = currentSuppDate;
         const s = suppLogs[currentSuppDate] || {};
@@ -268,39 +528,82 @@
             vitaminD: document.getElementById("vitaminD-check").checked
         };
         saveAll();
-        alert("✅ Сохранено");
+        alert("✅ Сохранено на " + currentSuppDate);
     }
     
+    // ================================================
+    // СТАТИСТИКА
+    // ================================================
     function refreshStats() {
         let total = 0, completed = 0, bests = {};
         for (let key in trainingProgress) {
             total++;
             if (trainingProgress[key].completed) completed++;
             let w = parseFloat(trainingProgress[key].weight);
-            if (!isNaN(w) && w > 0) bests[key.split("_").slice(1).join("_")] = w;
+            if (!isNaN(w) && w > 0) {
+                let exName = key.split("_").slice(1).join("_").substring(0, 35);
+                if (!bests[exName] || w > bests[exName]) bests[exName] = w;
+            }
         }
-        document.getElementById("stats-summary").innerHTML = `<p>✅ Выполнено: ${completed} из ${total} (${total?Math.round(completed/total*100):0}%)</p>`;
+        const percent = total ? Math.round((completed / total) * 100) : 0;
+        document.getElementById("stats-summary").innerHTML = `
+            <p>✅ Выполнено упражнений: ${completed} из ${total}</p>
+            <p>📊 Общий прогресс: ${percent}%</p>
+            <div class="progress-bar"><div class="progress-fill" style="width:${percent}%; background:#2ecc71;"></div></div>
+        `;
+        
         let bestHtml = "";
-        for (let ex in bests) bestHtml += `<div class="food-item">🏆 ${ex}: ${bests[ex]} кг</div>`;
+        for (let ex in bests) {
+            bestHtml += `<div class="food-item">🏆 ${ex}: ${bests[ex]} кг</div>`;
+        }
         document.getElementById("bests-container").innerHTML = bestHtml || "<p>Нет рекордов</p>";
     }
     
+    // ================================================
+    // ИСТОРИЯ
+    // ================================================
     function updateHistory() {
         let html = "";
-        Object.keys(foodLogs).sort().reverse().slice(0,14).forEach(date => {
-            const total = foodLogs[date].reduce((s,i)=>s+i.kcal,0);
-            html += `<div class="food-item"><span>${date}</span><span>${total}/${CALORIE_GOAL} ккал</span></div>`;
-        });
+        const dates = Object.keys(foodLogs).sort().reverse().slice(0, 14);
+        for (let date of dates) {
+            const foods = foodLogs[date];
+            const kcal = foods.reduce((s, i) => s + i.kcal, 0);
+            const protein = foods.reduce((s, i) => s + (i.protein || 0), 0);
+            const kcalPercent = Math.round((kcal / CAL_GOAL) * 100);
+            const proteinPercent = Math.round((protein / PROTEIN_GOAL) * 100);
+            html += `<div class="food-item">
+                <span>📅 ${date}</span>
+                <span>${kcal} ккал (${kcalPercent}%) | ${protein}г белка (${proteinPercent}%)</span>
+            </div>`;
+        }
         document.getElementById("history-list").innerHTML = html || "<p>Нет данных</p>";
     }
     
+    // ================================================
+    // ПЕРЕКЛЮЧЕНИЕ ВКЛАДОК
+    // ================================================
+    function switchTab(tabId) {
+        document.querySelectorAll(".tab-content").forEach(c => c.classList.remove("active"));
+        document.getElementById(`${tabId}-content`).classList.add("active");
+        document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+        document.querySelector(`.tab[data-tab="${tabId}"]`).classList.add("active");
+        
+        if (tabId === "stats") refreshStats();
+        if (tabId === "history") updateHistory();
+        if (tabId === "nutrition") updateFoodUI();
+        if (tabId === "supplements") updateSuppUI();
+    }
+    
+    // ================================================
+    // ИНИЦИАЛИЗАЦИЯ
+    // ================================================
     function init() {
-        // Заполнить select
+        // Заполняем select продуктами
         const select = document.getElementById("food-select");
         for (let name in foodDB) {
             const opt = document.createElement("option");
             opt.value = name;
-            opt.textContent = `${name} — ${foodDB[name].kcal} ккал/100г`;
+            opt.textContent = `${name} — ${foodDB[name].kcal} ккал / ${foodDB[name].protein}г белка на 100г`;
             select.appendChild(opt);
         }
         
@@ -311,24 +614,45 @@
         refreshStats();
         updateHistory();
         
+        // Кнопки
         document.getElementById("add-food").onclick = addFood;
-        document.getElementById("prev-day").onclick = () => { currentFoodDate = new Date(Date.parse(currentFoodDate) - 86400000).toDateString(); updateFoodUI(); };
-        document.getElementById("next-day").onclick = () => { currentFoodDate = new Date(Date.parse(currentFoodDate) + 86400000).toDateString(); updateFoodUI(); };
-        document.getElementById("supp-prev-day").onclick = () => { currentSuppDate = new Date(Date.parse(currentSuppDate) - 86400000).toDateString(); updateSuppUI(); };
-        document.getElementById("supp-next-day").onclick = () => { currentSuppDate = new Date(Date.parse(currentSuppDate) + 86400000).toDateString(); updateSuppUI(); };
+        document.getElementById("prev-day").onclick = () => {
+            currentFoodDate = new Date(Date.parse(currentFoodDate) - 86400000).toDateString();
+            updateFoodUI();
+        };
+        document.getElementById("next-day").onclick = () => {
+            currentFoodDate = new Date(Date.parse(currentFoodDate) + 86400000).toDateString();
+            updateFoodUI();
+        };
+        document.getElementById("supp-prev-day").onclick = () => {
+            currentSuppDate = new Date(Date.parse(currentSuppDate) - 86400000).toDateString();
+            updateSuppUI();
+        };
+        document.getElementById("supp-next-day").onclick = () => {
+            currentSuppDate = new Date(Date.parse(currentSuppDate) + 86400000).toDateString();
+            updateSuppUI();
+        };
         document.getElementById("save-supplements").onclick = saveSupplements;
-        document.getElementById("reset-progress").onclick = () => { if(confirm("Сбросить всё?")) { trainingProgress = {}; saveAll(); renderExercises(); } };
+        document.getElementById("reset-progress").onclick = () => {
+            if (confirm("Сбросить весь прогресс тренировок?")) {
+                trainingProgress = {};
+                saveAll();
+                renderExercises();
+            }
+        };
         document.getElementById("refresh-stats").onclick = refreshStats;
         
         document.querySelectorAll(".tab").forEach(tab => {
-            tab.onclick = () => {
-                document.querySelectorAll(".tab,.tab-content").forEach(c => c.classList.remove("active"));
-                tab.classList.add("active");
-                document.getElementById(`${tab.dataset.tab}-content`).classList.add("active");
-                if (tab.dataset.tab === "stats") refreshStats();
-                if (tab.dataset.tab === "history") updateHistory();
-            };
+            tab.onclick = () => switchTab(tab.dataset.tab);
         });
+        
+        // Проверяем разрешение на уведомления
+        if ("Notification" in window && Notification.permission === "granted") {
+            notificationPermission = true;
+            document.getElementById("notification-banner").innerHTML = "🔔 Уведомления ВКЛЮЧЕНЫ! В 20:00 придёт отчёт";
+            document.getElementById("notification-banner").className = "notification-banner on";
+            scheduleEveningNotification();
+        }
     }
     
     init();
